@@ -6,6 +6,7 @@ from assignment2 import Player, State, Action
 
 class MinimaxPlayer(Player):
     def __init__(self):
+        self.count = 0
         self.bestMove = None
         self.cache ={}
 
@@ -29,13 +30,13 @@ class MinimaxPlayer(Player):
             bestMove = None
             bestValue = -100
             next_actions = state.actions()
-            for x in range (0,len(next_actions)):
-                tmpAction = next_actions[x]
-                nextState = state.result(tmpAction)
+            for x in next_actions:
+                self.count = self.count + 1
+                nextState = state.result(x)
                 tmpBest = self.minimax(nextState, False)
                 if tmpBest > bestValue:
                     bestValue = tmpBest
-                    bestMove = tmpAction
+                    bestMove = x
             self.bestMove = bestMove
             return bestValue
 
@@ -44,6 +45,7 @@ class MinimaxPlayer(Player):
            bestValue = +100
            next_actions = state.actions()
            for x in next_actions:
+               self.count = self.count + 1
                nextState = state.result(x)
                tmpBest = self.minimax(nextState, True)
                if tmpBest < bestValue:
@@ -51,16 +53,9 @@ class MinimaxPlayer(Player):
            return bestValue
 
     def move(self, state):
-# Some experiments of printing, for the purpose of knowing the attributes.
-#       next_actions = state.actions()
-#       next_states = list()
-#       for x in next_actions:
-#       next_states.append(state.result(x))
-#       print state.board
-#       print state.player_row
-#       print state.player_goal_idx
-#       print state.board[state.opponent_goal_idx]
-
+        next_actions = state.actions()
+        if len(next_actions) == 0:
+            return
         self.myGoalIdx = state.player_goal_idx
         self.myOpponentIdx =state.opponent_goal_idx
         result = self.minimax(state, True)
