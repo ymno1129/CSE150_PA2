@@ -32,28 +32,25 @@ class EvaluationPlayer(Player):
         return best_move
 
     def evaluate(self, state, my_row):
-        """
-        Evaluates the state for the player with the given row
-        """
         value = 0
-        stonesOnMySide = 0
-        stonesOnOpponentSide = 0
-        stonesInMyGoal = 0
-        stonesInOpponentGoal = 0
+        soms = 0 #stones on my side
+        soos = 0 #stones on opponent side
+        simg = 0 #stones in my goal
+        siog = 0 #stones in opponent goal
         if my_row == 0:
-            stonesInMyGoal = state.board[state.M]
-            stonesInOpponentGoal = state.board[(2 * state.M + 1)]
+            simg = state.board[state.M]
+            siog = state.board[(2 * state.M + 1)]
             for x in range (0, state.M):
-                 stonesOnMySide = stonesOnMySide + state.board[x]
-                 stonesOnOpponentSide = stonesOnOpponentSide + state.board[(2 * state.M - x)]
+                 soms = soms + state.board[x]
+                 soos = soos + state.board[(2 * state.M - x)]
         else:
-            stonesInMyGoal = state.board[(2 * state.M + 1)]
-            stonesInOpponentGoal = state.board[state.M]
+            simg = state.board[(2 * state.M + 1)]
+            siog = state.board[state.M]
             for x in range (state.M + 1, 2 * state.M + 1):
-                 stonesOnMySide = stonesOnMySide + state.board[x]
-                 stonesOnOpponentSide = stonesOnOpponentSide + state.board[(2 * state.M - x)]
-        value = stonesInMyGoal - stonesInOpponentGoal
-        value = value + stonesOnMySide - stonesOnOpponentSide
+                 soms = soms + state.board[x]
+                 soos = soos + state.board[(2 * state.M - x)]
+        value = simg - siog
+        value = value + soms - soos
         value = float(value) / (2 * state.M * state.N)
         return value
         raise NotImplementedError("Need to implement this method")
