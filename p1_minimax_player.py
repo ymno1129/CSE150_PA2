@@ -6,7 +6,6 @@ from assignment2 import Player, State, Action
 
 class MinimaxPlayer(Player):
     def __init__(self):
-        self.count = 0
         self.bestMove = None
         self.cache ={}
 
@@ -31,7 +30,6 @@ class MinimaxPlayer(Player):
             bestValue = -100
             next_actions = state.actions()
             for x in next_actions:
-                self.count = self.count + 1
                 nextState = state.result(x)
                 tmpBest = self.minimax(nextState, False)
                 if tmpBest > bestValue:
@@ -45,7 +43,6 @@ class MinimaxPlayer(Player):
            bestValue = +100
            next_actions = state.actions()
            for x in next_actions:
-               self.count = self.count + 1
                nextState = state.result(x)
                tmpBest = self.minimax(nextState, True)
                if tmpBest < bestValue:

@@ -6,7 +6,7 @@ __email__ = 'daz040@eng.ucsd.edu'
 from assignment2 import Player
 from collections import defaultdict
 
-class CustomPlayer(Player):
+class CustomPlayer2(Player):
     '''
     Evaluation function
     '''
@@ -74,7 +74,7 @@ class CustomPlayer(Player):
                 nextState = state.result(x)
                 tmpBest = self.alphabeta(nextState, a, b, True, depth + 1)
                 if tmpBest < b:
-                    b = tmpBest
+                    v = tmpBest
                 if b <= a:
                     break
             return b
@@ -90,8 +90,8 @@ class CustomPlayer(Player):
         pass
 
     def move(self, state):
-        self.tmpBestResult = None
         self.tmpBestMove = None
+        self.tmpBestResult = None
         self.bestMove = None
         self.bestResult = None
 
@@ -102,7 +102,7 @@ class CustomPlayer(Player):
         self.myGoalIdx = state.player_goal_idx
         self.myOpponentIdx = state.opponent_goal_idx
         
-        for x in range (0, 20):
+        for x in range (0, 2):
             self.maxDepth = x
             result = self.alphabeta(state, -1000, 1000, True, 0)
             if self.tmpBestResult == None:
